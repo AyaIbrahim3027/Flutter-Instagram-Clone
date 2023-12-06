@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/Features/presentation/pages/credential/sign_up_page.dart';
 
 import 'Features/presentation/pages/credential/sign_in_page.dart';
 
@@ -15,7 +16,7 @@ class InstagramApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Instagram Clone',
       theme: ThemeData.dark(),
-      home: SignInPage(),
+      home: SignUpPage(),
     );
   }
 }
