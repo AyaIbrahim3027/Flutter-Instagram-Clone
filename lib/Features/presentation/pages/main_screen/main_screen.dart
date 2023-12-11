@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:instagram_clone/Features/presentation/pages/activity/activity_page.dart';
+import 'package:instagram_clone/Features/presentation/pages/post/upload_post_page.dart';
+import 'package:instagram_clone/Features/presentation/pages/profile/profile_page.dart';
+import 'package:instagram_clone/Features/presentation/pages/search/search_page.dart';
 import 'package:instagram_clone/consts.dart';
+
+import '../home/home_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -39,7 +45,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backGroundColor,
       bottomNavigationBar: CupertinoTabBar(
         backgroundColor: backGroundColor,
         items: const [
@@ -50,7 +55,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
             label: '',
           ),
-
           BottomNavigationBarItem(
             icon: Icon(
               Ionicons.md_search,
@@ -58,7 +62,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
             label: '',
           ),
-
           BottomNavigationBarItem(
             icon: Icon(
               Ionicons.md_add_circle,
@@ -66,7 +69,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
             label: '',
           ),
-
           BottomNavigationBarItem(
             icon: Icon(
               Icons.favorite,
@@ -74,7 +76,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
             label: '',
           ),
-
           BottomNavigationBarItem(
             icon: Icon(
               Icons.account_circle_outlined,
@@ -83,59 +84,17 @@ class _MainScreenState extends State<MainScreen> {
             label: '',
           ),
         ],
-
         onTap: navigationTapped,
       ),
-
       body: PageView(
         controller: pageController,
         onPageChanged: onPageChanged,
-        children:  const [
-          Center(
-            child: Text(
-              'Home',
-              style: TextStyle(
-                color: primaryColor,
-              ),
-            ),
-          ),
-
-          Center(
-            child: Text(
-              'Search',
-              style: TextStyle(
-                color: primaryColor,
-              ),
-            ),
-          ),
-
-          Center(
-            child: Text(
-              'Post',
-              style: TextStyle(
-                color: primaryColor,
-              ),
-            ),
-          ),
-
-          Center(
-            child: Text(
-              'ACtivity',
-              style: TextStyle(
-                color: primaryColor,
-              ),
-            ),
-          ),
-
-          Center(
-            child: Text(
-              'Profile',
-              style: TextStyle(
-                color: primaryColor,
-              ),
-            ),
-          ),
-
+        children: const [
+          HomePage(),
+          SearchPage(),
+          UploadPostPage(),
+          ActivityPage(),
+          ProfilePage(),
         ],
       ),
     );
