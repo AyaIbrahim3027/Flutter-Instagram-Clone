@@ -18,15 +18,15 @@ class _CommentPageState extends State<CommentPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backGroundColor,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-          ),
-          color: primaryColor,
-        ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        //   icon: const Icon(
+        //     Icons.arrow_back,
+        //   ),
+        //   color: primaryColor,
+        // ),
         title: const Text(
           'Comments',
           style: TextStyle(
