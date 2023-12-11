@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/Features/presentation/pages/post/comments/comment_page.dart';
 
 import '../../../../consts.dart';
 
@@ -21,8 +22,8 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(right: 10),
               child: Icon(
-                  MaterialCommunityIcons.facebook_messenger,
-                  color: primaryColor,
+                MaterialCommunityIcons.facebook_messenger,
+                color: primaryColor,
               ),
             ),
           ],
@@ -56,8 +57,8 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                   const Icon(
-                      Icons.more_vert,
-                      color: primaryColor,
+                    Icons.more_vert,
+                    color: primaryColor,
                   ),
                 ],
               ),
@@ -73,14 +74,35 @@ class HomePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.favorite,color: primaryColor,),
+                      const Icon(
+                        Icons.favorite,
+                        color: primaryColor,
+                      ),
                       sizeHor(10),
-                      const Icon(Feather.message_circle,color: primaryColor,),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CommentPage(),
+                              ),
+                            );
+                          },
+                          child: const Icon(
+                            Feather.message_circle,
+                            color: primaryColor,
+                          )),
                       sizeHor(10),
-                      const Icon(Feather.send,color: primaryColor,),
+                      const Icon(
+                        Feather.send,
+                        color: primaryColor,
+                      ),
                     ],
                   ),
-                  const Icon(Icons.bookmark_border,color: primaryColor,),
+                  const Icon(
+                    Icons.bookmark_border,
+                    color: primaryColor,
+                  ),
                 ],
               ),
               sizeVer(10),
@@ -110,7 +132,6 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-
               sizeVer(10),
               const Text(
                 'View all 10 comments',
