@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/Features/presentation/pages/home/open_bottom_modal_sheet_for_post.dart';
 import 'package:instagram_clone/Features/presentation/pages/post/comments/comment_page.dart';
 
 import '../../../../consts.dart';
+import '../post/update_post_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -56,9 +58,14 @@ class HomePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Icon(
-                    Icons.more_vert,
-                    color: primaryColor,
+                  GestureDetector(
+                    onTap: () {
+                      openBottomModalSheetForPost(context);
+                    },
+                    child: const Icon(
+                      Icons.more_vert,
+                      color: primaryColor,
+                    ),
                   ),
                 ],
               ),
