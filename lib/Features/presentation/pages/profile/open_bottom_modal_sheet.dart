@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../consts.dart';
+import 'edit_profile_page.dart';
 
 openBottomModalSheet(BuildContext context) {
   return showModalBottomSheet(
@@ -37,6 +38,9 @@ openBottomModalSheet(BuildContext context) {
                    Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const EditProfilePage(), ),);
+                      },
                       child: const Text(
                         'Edit Profile',
                         style: TextStyle(
