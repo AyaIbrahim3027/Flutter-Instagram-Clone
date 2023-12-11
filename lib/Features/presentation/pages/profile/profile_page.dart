@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../consts.dart';
+import 'open_bottom_modal_sheet.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -16,12 +17,17 @@ class ProfilePage extends StatelessWidget {
             color: primaryColor,
           ),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: Icon(
-              Icons.menu,
-              color: primaryColor,
+            padding: const EdgeInsets.only(right: 5),
+            child: IconButton(
+              onPressed: () {
+                openBottomModalSheet(context);
+              },
+              icon: const Icon(
+                Icons.menu,
+                color: primaryColor,
+              ),
             ),
           ),
         ],
@@ -122,25 +128,27 @@ class ProfilePage extends StatelessWidget {
               ),
               sizeVer(10),
               GridView.builder(
-                  itemCount: 32,
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 2,
-                    mainAxisSpacing: 2,
-                  ),
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: 100,
-                      height: 100,
-                      color: secondaryColor,
-                    );
-                  },),
+                itemCount: 32,
+                physics: const ScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 2,
+                  mainAxisSpacing: 2,
+                ),
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 100,
+                    height: 100,
+                    color: secondaryColor,
+                  );
+                },
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
 }
