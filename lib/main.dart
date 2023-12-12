@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/Features/presentation/pages/credential/sign_up_page.dart';
-import 'package:instagram_clone/Features/presentation/pages/main_screen/main_screen.dart';
 import 'package:instagram_clone/consts.dart';
 
 import 'Features/presentation/pages/credential/sign_in_page.dart';
