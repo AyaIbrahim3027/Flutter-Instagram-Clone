@@ -4,6 +4,7 @@ import 'package:instagram_clone/Features/presentation/pages/main_screen/main_scr
 import 'package:instagram_clone/consts.dart';
 
 import 'Features/presentation/pages/credential/sign_in_page.dart';
+import 'on_generate_route.dart';
 
 void main() {
   runApp(const InstagramApp());
@@ -20,7 +21,12 @@ class InstagramApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: backGroundColor,
       ),
-      home: MainScreen(),
+      onGenerateRoute: OnGenerateRoute.route,
+      initialRoute: '/',
+      routes: {
+        '/' : (context) => const SignInPage(),
+      },
+      // home: MainScreen(),
     );
   }
 }

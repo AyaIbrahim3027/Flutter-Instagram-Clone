@@ -88,12 +88,13 @@ class HomePage extends StatelessWidget {
                       sizeHor(10),
                       GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const CommentPage(),
-                              ),
-                            );
+                            Navigator.pushNamed(context, PageConst.commentPage);
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const CommentPage(),
+                            //   ),
+                            // );
                           },
                           child: const Icon(
                             Feather.message_circle,

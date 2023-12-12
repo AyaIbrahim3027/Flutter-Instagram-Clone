@@ -39,7 +39,8 @@ openBottomModalSheetForPost(BuildContext context) {
                     padding: const EdgeInsets.only(left: 10),
                     child: GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const UpdatePostPage() , ),);
+                        Navigator.pushNamed(context, PageConst.updatePostPage);
+                        // Navigator.push(context, MaterialPageRoute(builder: (context)=> const UpdatePostPage() , ),);
                       },
                       child: const Text(
                         'Update Post ',
