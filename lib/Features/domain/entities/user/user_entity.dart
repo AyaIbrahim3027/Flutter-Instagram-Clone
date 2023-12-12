@@ -8,10 +8,11 @@ class UserEntity extends Equatable{
   final String? website;
   final String? email;
   final String? profileUrl;
-  final List? follower;
+  final List? followers;
   final List? following;
   final num? totalFollowers;
   final num? totalFollowing;
+  final num? totalPosts;
 
   // will not going to store in DB
   final String? password;
@@ -25,12 +26,13 @@ class UserEntity extends Equatable{
     this.website,
     this.email,
     this.profileUrl,
-    this.follower,
+    this.followers,
     this.following,
     this.totalFollowers,
     this.totalFollowing,
     this.password,
     this.otherUserId,
+    this.totalPosts,
   });
 
   @override
@@ -42,11 +44,12 @@ class UserEntity extends Equatable{
     website,
     email,
     profileUrl,
-    follower,
+    followers,
     following,
     totalFollowers,
     totalFollowing,
     password,
     otherUserId,
+    totalPosts,
   ];
 }
