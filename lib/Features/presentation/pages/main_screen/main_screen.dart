@@ -10,7 +10,8 @@ import 'package:instagram_clone/consts.dart';
 import '../home/home_page.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  const MainScreen({super.key, required this.userId});
+  final String userId;
 
   @override
   State<MainScreen> createState() => _MainScreenState();
