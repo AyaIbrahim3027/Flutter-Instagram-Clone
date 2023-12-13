@@ -40,4 +40,13 @@ class AuthCubit extends Cubit<AuthState> {
       emit(UnAuthenticated());
     }
   }
+
+  Future<void> loggedOut() async {
+    try {
+      await signOutUseCase.call();
+      emit(UnAuthenticated());
+    } catch (e) {
+      emit(UnAuthenticated());
+    }
+  }
 }
