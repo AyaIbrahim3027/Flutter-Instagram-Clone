@@ -63,7 +63,7 @@ class UserModel extends UserEntity {
     );
   }
 
-  Map<String,dynamic> tpJson() => {
+  Map<String,dynamic> toJson() => {
     "userId": userId,
     "email": email,
     "name": name,

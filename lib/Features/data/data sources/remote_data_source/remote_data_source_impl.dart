@@ -33,7 +33,7 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
               followers: user.followers,
               totalFollowing: user.totalFollowing,
               totalPosts: user.totalPosts)
-          .tpJson();
+          .toJson();
 
       if (!userDoc.exists) {
         userCollection.doc(userId).set(newUser);
