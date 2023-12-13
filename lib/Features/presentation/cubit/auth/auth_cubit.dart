@@ -18,16 +18,25 @@ class AuthCubit extends Cubit<AuthState> {
   final IsSignInUseCase isSignInUseCase;
   final GetCurrentUserIdUseCase getCurrentUserIdUseCase;
 
-  Future<void> appStarted (BuildContext context) async {
-    try{
+  Future<void> appStarted(BuildContext context) async {
+    try {
       bool isSignIn = await isSignInUseCase.call();
-      if(isSignIn == true){
+      if (isSignIn == true) {
         final userId = await getCurrentUserIdUseCase.call();
         emit(Authenticated(userId: userId));
-      }else{
+      } else {
         emit(UnAuthenticated());
       }
-    }catch(e){
+    } catch (e) {
+      emit(UnAuthenticated());
+    }
+  }
+
+  Future<void> loggedIn() async {
+    try {
+      final userId = await getCurrentUserIdUseCase.call();
+      emit(Authenticated(userId: userId));
+    } catch (e) {
       emit(UnAuthenticated());
     }
   }
