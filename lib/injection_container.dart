@@ -15,6 +15,7 @@ import 'package:instagram_clone/Features/domain/use%20cases/firebase_usecases/us
 import 'package:instagram_clone/Features/domain/use%20cases/firebase_usecases/user/update_user_usecase.dart';
 import 'package:instagram_clone/Features/presentation/cubit/auth/auth_cubit.dart';
 import 'package:instagram_clone/Features/presentation/cubit/credential/credential_cubit.dart';
+import 'package:instagram_clone/Features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:instagram_clone/Features/presentation/cubit/user/user_cubit.dart';
 
 import 'Features/domain/use cases/firebase_usecases/user/create_user_usecase.dart';
@@ -38,6 +39,8 @@ Future<void> init() async {
         updateUserUseCase: sl.call(),
         getUsersUseCase: sl.call(),
       ));
+
+  sl.registerFactory(() => GetSingleUserCubit(getSingleUserUseCase: sl.call(),));
 
   // Use cases
   sl.registerLazySingleton(() => SignOutUseCase(repository: sl.call()));
