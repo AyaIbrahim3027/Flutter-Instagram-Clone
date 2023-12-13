@@ -2,13 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/Features/presentation/pages/home/open_bottom_modal_sheet_for_post.dart';
-import 'package:instagram_clone/Features/presentation/pages/post/comments/comment_page.dart';
-
 import '../../../../consts.dart';
-import '../post/update_post_page.dart';
+import 'package:instagram_clone/injection_container.dart' as di;
 
-class HomePage extends StatelessWidget {
+import '../../../domain/use cases/firebase_usecases/user/get_current_userid_usecase.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  // @override
+  // void initState() {
+  //   di.sl<GetCurrentUserIdUseCase>().call().then((value) {
+  //     value
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
