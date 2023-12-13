@@ -29,4 +29,15 @@ class UserCubit extends Cubit<UserState> {
       emit(UserFailure());
     }
   }
+
+  Future<void> updateUser({required UserEntity user}) async {
+    try {
+      await updateUserUseCase
+          .call(user);
+    } on SocketException catch (e) {
+      emit(UserFailure());
+    } catch (e) {
+      emit(UserFailure());
+    }
+  }
 }
