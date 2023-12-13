@@ -4,13 +4,14 @@ import 'package:instagram_clone/Features/presentation/pages/main_screen/main_scr
 import 'package:instagram_clone/consts.dart';
 import 'firebase_options.dart';
 import 'on_generate_route.dart';
+import 'injection_container.dart' as di;
 
 Future <void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  await di.init();
   runApp(const InstagramApp());
 }
 
