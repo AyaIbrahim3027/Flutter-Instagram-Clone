@@ -5,6 +5,7 @@ import 'package:instagram_clone/Features/data/data%20sources/remote_data_source/
 import 'package:instagram_clone/Features/data/data%20sources/remote_data_source/remote_data_source_impl.dart';
 import 'package:instagram_clone/Features/data/repos/firebase_repo_impl.dart';
 import 'package:instagram_clone/Features/domain/repos/firebase_repo.dart';
+import 'package:instagram_clone/Features/domain/use%20cases/firebase_usecases/storage/upload_image_to_storage_usecase.dart';
 import 'package:instagram_clone/Features/domain/use%20cases/firebase_usecases/user/get_current_userid_usecase.dart';
 import 'package:instagram_clone/Features/domain/use%20cases/firebase_usecases/user/get_single_user_usecase.dart';
 import 'package:instagram_clone/Features/domain/use%20cases/firebase_usecases/user/get_users_usecase.dart';
@@ -53,6 +54,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetUsersUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => CreateUserUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => GetSingleUserUseCase(repository: sl.call()));
+
+  // Cloud Storage
+  sl.registerLazySingleton(() => UploadImageToStorageUseCase(repository: sl.call()));
+
 
   // Repository
   sl.registerLazySingleton<FirebaseRepo>(() => FirebaseRepoImpl(
