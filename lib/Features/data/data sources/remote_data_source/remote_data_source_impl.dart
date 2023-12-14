@@ -21,6 +21,36 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
     required this.firebaseStorage,
   });
 
+
+  Future<void> createUserWithImage(UserEntity user,String profileUrl) async {
+    final userCollection = firebaseFirestore.collection(FirebaseConst.users);
+    final userId = await getCurrentUserId();
+    userCollection.doc(userId).get().then((userDoc) {
+      final newUser = UserModel(
+          userId: userId,
+          name: user.name,
+          email: user.email,
+          bio: user.bio,
+          following: user.following,
+          website: user.website,
+          profileUrl: profileUrl,
+          userName: user.userName,
+          totalFollowers: user.totalFollowers,
+          followers: user.followers,
+          totalFollowing: user.totalFollowing,
+          totalPosts: user.totalPosts)
+          .toJson();
+
+      if (!userDoc.exists) {
+        userCollection.doc(userId).set(newUser);
+      } else {
+        userCollection.doc(userId).update(newUser);
+      }
+    }).catchError((error) {
+      toast('Some error occur');
+    });
+  }
+
   @override
   Future<void> createUser(UserEntity user) async {
     final userCollection = firebaseFirestore.collection(FirebaseConst.users);
