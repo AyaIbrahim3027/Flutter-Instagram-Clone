@@ -52,6 +52,7 @@ class _MainScreenState extends State<MainScreen> {
     return BlocBuilder<GetSingleUserCubit, GetSingleUserState>(
       builder: (context, state) {
         if(state is GetSingleUserLoaded){
+          final currentUser = state.user;
           return Scaffold(
             bottomNavigationBar: CupertinoTabBar(
               backgroundColor: backGroundColor,
@@ -97,12 +98,12 @@ class _MainScreenState extends State<MainScreen> {
             body: PageView(
               controller: pageController,
               onPageChanged: onPageChanged,
-              children: const [
+              children:  [
                 HomePage(),
                 SearchPage(),
                 UploadPostPage(),
                 ActivityPage(),
-                ProfilePage(),
+                ProfilePage(currentUser: currentUser),
               ],
             ),
           );

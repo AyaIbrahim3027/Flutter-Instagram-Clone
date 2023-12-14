@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/Features/domain/entities/user/user_entity.dart';
 
 import '../../../../consts.dart';
 import 'open_bottom_modal_sheet.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({super.key, required this.currentUser});
+  final UserEntity currentUser;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backGroundColor,
-        title: const Text(
-          'Username',
-          style: TextStyle(
+        title: Text(
+          '${currentUser.userName}',
+          style: const TextStyle(
             color: primaryColor,
           ),
         ),
@@ -53,9 +55,9 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          const Text(
-                            '0',
-                            style: TextStyle(
+                          Text(
+                            '${currentUser.totalPosts}',
+                            style: const TextStyle(
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -72,9 +74,9 @@ class ProfilePage extends StatelessWidget {
                       sizeHor(25),
                       Column(
                         children: [
-                          const Text(
-                            '54',
-                            style: TextStyle(
+                          Text(
+                            '${currentUser.totalFollowers}',
+                            style: const TextStyle(
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -91,9 +93,9 @@ class ProfilePage extends StatelessWidget {
                       sizeHor(25),
                       Column(
                         children: [
-                          const Text(
-                            '123',
-                            style: TextStyle(
+                          Text(
+                            '${currentUser.totalFollowing}',
+                            style: const TextStyle(
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -112,17 +114,19 @@ class ProfilePage extends StatelessWidget {
                 ],
               ),
               sizeVer(10),
-              const Text(
-                'Name',
-                style: TextStyle(
+              Text(
+                '${currentUser.name == ''
+                    ? currentUser.userName
+                    : currentUser.name}',
+                style: const TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               sizeVer(10),
-              const Text(
-                'The bio of user',
-                style: TextStyle(
+               Text(
+                '${currentUser.bio}',
+                style: const TextStyle(
                   color: primaryColor,
                 ),
               ),
@@ -150,5 +154,4 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
-
 }
