@@ -23,7 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController bioController = TextEditingController();
 
-  bool isSigningIn = false;
+  bool isSigningUp = false;
 
   @override
   void dispose() {
@@ -137,6 +137,24 @@ class _SignUpPageState extends State<SignUpPage> {
               signUpUser();
             },
           ),
+
+          sizeVer(10),
+          isSigningUp == true ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Please wait',
+                style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              sizeHor(10),
+              const CircularProgressIndicator(),
+            ],
+          ) : Container(width: 0, height: 0,),
+
           Flexible(
             flex: 2,
             child: Container(),
@@ -173,22 +191,6 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ],
           ),
-          sizeVer(10),
-          isSigningIn == true ? Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Please wait',
-                style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              sizeHor(10),
-              const CircularProgressIndicator(),
-            ],
-          ) : Container(width: 0, height: 0,),
         ],
       ),
     );
@@ -196,7 +198,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void signUpUser() {
     setState(() {
-      isSigningIn = true;
+      isSigningUp = true;
     });
     BlocProvider.of<CredentialCubit>(context)
         .signUpUser(
@@ -224,7 +226,7 @@ class _SignUpPageState extends State<SignUpPage> {
       emailController.clear();
       passwordController.clear();
       bioController.clear();
-      isSigningIn = false;
+      isSigningUp = false;
     });
   }
 }
