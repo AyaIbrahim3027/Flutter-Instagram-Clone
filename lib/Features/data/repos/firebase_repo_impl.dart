@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:instagram_clone/Features/data/data%20sources/remote_data_source/remote_data_source.dart';
 import 'package:instagram_clone/Features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/Features/domain/repos/firebase_repo.dart';
 
-class FirebaseRepoImpl implements FirebaseRepo{
+class FirebaseRepoImpl implements FirebaseRepo {
   final FirebaseRemoteDataSource remoteDataSource;
 
   FirebaseRepoImpl({required this.remoteDataSource});
@@ -24,16 +26,14 @@ class FirebaseRepoImpl implements FirebaseRepo{
       remoteDataSource.getUsers(user);
 
   @override
-  Future<bool> isSignIn() async =>
-      remoteDataSource.isSignIn();
+  Future<bool> isSignIn() async => remoteDataSource.isSignIn();
 
   @override
   Future<void> signInUser(UserEntity user) async =>
       remoteDataSource.signInUser(user);
 
   @override
-  Future<void> signOut() async =>
-      remoteDataSource.signOut();
+  Future<void> signOut() async => remoteDataSource.signOut();
 
   @override
   Future<void> signUpUser(UserEntity user) async =>
@@ -42,5 +42,12 @@ class FirebaseRepoImpl implements FirebaseRepo{
   @override
   Future<void> updateUser(UserEntity user) async =>
       remoteDataSource.updateUser(user);
-  
+
+  @override
+  Future<String> uploadImageToStorage(
+    File? file,
+    bool isPost,
+    String childName,
+  ) async =>
+      remoteDataSource.uploadImageToStorage(file, isPost, childName);
 }
