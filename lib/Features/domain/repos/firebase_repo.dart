@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:instagram_clone/Features/domain/entities/user/user_entity.dart';
 abstract class FirebaseRepo{
   // Credential
@@ -12,4 +15,7 @@ abstract class FirebaseRepo{
   Future<String> getCurrentUserId();
   Future<void> createUser(UserEntity user);
   Future<void> updateUser(UserEntity user);
+
+  // Cloud Storage
+  Future<String> uploadImageToStorage(File? file , bool isPost , String childName);
 }
