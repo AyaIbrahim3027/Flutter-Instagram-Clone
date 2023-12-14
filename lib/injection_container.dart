@@ -41,7 +41,9 @@ Future<void> init() async {
         getUsersUseCase: sl.call(),
       ));
 
-  sl.registerFactory(() => GetSingleUserCubit(getSingleUserUseCase: sl.call(),));
+  sl.registerFactory(() => GetSingleUserCubit(
+        getSingleUserUseCase: sl.call(),
+      ));
 
   // Use cases
   sl.registerLazySingleton(() => SignOutUseCase(repository: sl.call()));
@@ -56,8 +58,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetSingleUserUseCase(repository: sl.call()));
 
   // Cloud Storage
-  sl.registerLazySingleton(() => UploadImageToStorageUseCase(repository: sl.call()));
-
+  sl.registerLazySingleton(
+      () => UploadImageToStorageUseCase(repository: sl.call()));
 
   // Repository
   sl.registerLazySingleton<FirebaseRepo>(() => FirebaseRepoImpl(
@@ -69,6 +71,7 @@ Future<void> init() async {
       () => FirebaseRemoteDataSourceImpl(
             firebaseFirestore: sl.call(),
             firebaseAuth: sl.call(),
+            firebaseStorage: sl.call(),
           ));
 
   // Externals
