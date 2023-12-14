@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_clone/Features/presentation/cubit/auth/auth_cubit.dart';
 
 import '../../../../consts.dart';
 
@@ -34,10 +36,10 @@ openBottomModalSheet(BuildContext context) {
                     color: secondaryColor,
                   ),
                   sizeVer(8),
-                   Padding(
+                  Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Navigator.pushNamed(context, PageConst.editProfilePage);
                         // Navigator.push(context, MaterialPageRoute(builder: (context)=> const EditProfilePage(), ),);
                       },
@@ -56,14 +58,21 @@ openBottomModalSheet(BuildContext context) {
                     color: secondaryColor,
                   ),
                   sizeVer(7),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text(
-                      'Logout',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: primaryColor,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: InkWell(
+                      onTap: () {
+                        BlocProvider.of<AuthCubit>(context).loggedOut();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, PageConst.signInPage, (route) => false);
+                      },
+                      child: const Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: primaryColor,
+                        ),
                       ),
                     ),
                   ),
