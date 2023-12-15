@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:instagram_clone/Features/data/data%20sources/remote_data_source/remote_data_source.dart';
+import 'package:instagram_clone/Features/domain/entities/posts/post_entity.dart';
 import 'package:instagram_clone/Features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/Features/domain/repos/firebase_repo.dart';
 
@@ -50,4 +51,26 @@ class FirebaseRepoImpl implements FirebaseRepo {
     String childName,
   ) async =>
       remoteDataSource.uploadImageToStorage(file, isPost, childName);
+
+  // Post
+
+  @override
+  Future<void> createPost(PostEntity post) async =>
+      remoteDataSource.createPost(post);
+
+  @override
+  Future<void> deletePost(PostEntity post) async =>
+      remoteDataSource.deletePost(post);
+
+  @override
+  Future<void> likePost(PostEntity post) async =>
+      remoteDataSource.likePost(post);
+
+  @override
+  Stream<List<PostEntity>> readPosts(PostEntity post)  =>
+      remoteDataSource.readPosts(post);
+
+  @override
+  Future<void> updatePost(PostEntity post) async =>
+      remoteDataSource.updatePost(post);
 }
