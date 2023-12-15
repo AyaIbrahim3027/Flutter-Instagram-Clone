@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/Features/domain/entities/user/user_entity.dart';
+import 'package:instagram_clone/profile_widget.dart';
 
 import '../../../../consts.dart';
 import 'open_bottom_modal_sheet.dart';
@@ -46,9 +47,15 @@ class ProfilePage extends StatelessWidget {
                   Container(
                     width: 80,
                     height: 80,
-                    decoration: const BoxDecoration(
-                      color: secondaryColor,
-                      shape: BoxShape.circle,
+                    // decoration: const BoxDecoration(
+                    //   color: secondaryColor,
+                    //   shape: BoxShape.circle,
+                    // ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(40),
+                      child: profileWidget(
+                        imageUrl: currentUser.profileUrl,
+                      ),
                     ),
                   ),
                   Row(
@@ -115,16 +122,14 @@ class ProfilePage extends StatelessWidget {
               ),
               sizeVer(10),
               Text(
-                '${currentUser.name == ''
-                    ? currentUser.userName
-                    : currentUser.name}',
+                '${currentUser.name == '' ? currentUser.userName : currentUser.name}',
                 style: const TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               sizeVer(10),
-               Text(
+              Text(
                 '${currentUser.bio}',
                 style: const TextStyle(
                   color: primaryColor,
