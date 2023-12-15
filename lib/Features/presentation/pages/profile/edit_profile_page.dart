@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_clone/Features/domain/entities/user/user_entity.dart';
+import 'package:instagram_clone/Features/presentation/cubit/user/user_cubit.dart';
 import 'package:instagram_clone/Features/presentation/pages/profile/widgets/profile_form_widget.dart';
 import 'package:instagram_clone/consts.dart';
 
@@ -18,6 +20,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController? usernameController;
   TextEditingController? websiteController;
   TextEditingController? bioController;
+
+  bool isUpdating = false;
 
   @override
   void initState() {
@@ -52,7 +56,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           Padding(
             padding: const EdgeInsets.only(right: 5),
             child: IconButton(
-              onPressed: () {},
+              onPressed: updateUserProfile,
               icon: const Icon(
                 Icons.done,
                 size: 32,
@@ -115,10 +119,52 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 controller: bioController,
               ),
               sizeVer(15),
+              isUpdating == true ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                 const Text(
+                    'Please wait...',
+                    style: TextStyle(
+                      color: primaryColor,
+                    ),
+                  ),
+                  sizeHor(10),
+                 const CircularProgressIndicator(),
+                ],
+              ) : Container(width: 0,height: 0,),
             ],
           ),
         ),
       ),
     );
+  }
+
+  updateUserProfile() {
+    setState(() {
+      isUpdating = true;
+    });
+    BlocProvider.of<UserCubit>(context)
+        .updateUser(
+          user: UserEntity(
+            userId: widget.currentUser.userId,
+            name: nameController!.text,
+            userName: usernameController!.text,
+            website: websiteController!.text,
+            bio: bioController!.text,
+          ),
+        )
+        .then((value) => clear());
+  }
+
+  clear() {
+    setState(() {
+      isUpdating = false;
+      nameController!.clear();
+      usernameController!.clear();
+      websiteController!.clear();
+      bioController!.clear();
+    });
+    
+    Navigator.pop(context);
   }
 }
