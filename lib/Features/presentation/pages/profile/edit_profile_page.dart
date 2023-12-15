@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/Features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/Features/presentation/pages/profile/widgets/profile_form_widget.dart';
 import 'package:instagram_clone/consts.dart';
 
-class EditProfilePage extends StatelessWidget {
-  const EditProfilePage({super.key});
+import '../../../../profile_widget.dart';
+
+class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({super.key, required this.currentUser});
+  final UserEntity currentUser;
+
+  @override
+  State<EditProfilePage> createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
+  TextEditingController? nameController;
+  TextEditingController? usernameController;
+  TextEditingController? websiteController;
+  TextEditingController? bioController;
+
+  @override
+  void initState() {
+    nameController = TextEditingController(text: widget.currentUser.name);
+    usernameController =
+        TextEditingController(text: widget.currentUser.userName);
+    websiteController = TextEditingController(text: widget.currentUser.website);
+    bioController = TextEditingController(text: widget.currentUser.bio);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +71,15 @@ class EditProfilePage extends StatelessWidget {
                 child: Container(
                   width: 120,
                   height: 120,
-                  decoration: const BoxDecoration(
-                    color: secondaryColor,
-                    shape: BoxShape.circle,
+                  // decoration: const BoxDecoration(
+                  //   color: secondaryColor,
+                  //   shape: BoxShape.circle,
+                  // ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(60),
+                    child: profileWidget(
+                      imageUrl: widget.currentUser.profileUrl,
+                    ),
                   ),
                 ),
               ),
@@ -65,13 +95,25 @@ class EditProfilePage extends StatelessWidget {
                 ),
               ),
               sizeVer(20),
-              const ProfileFormWidget(title: 'Name'),
+              ProfileFormWidget(
+                title: 'Name',
+                controller: nameController,
+              ),
               sizeVer(15),
-              const ProfileFormWidget(title: 'Username'),
+              ProfileFormWidget(
+                title: 'Username',
+                controller: usernameController,
+              ),
               sizeVer(15),
-              const ProfileFormWidget(title: 'website'),
+              ProfileFormWidget(
+                title: 'website',
+                controller: websiteController,
+              ),
               sizeVer(15),
-              const ProfileFormWidget(title: 'Bio'),
+              ProfileFormWidget(
+                title: 'Bio',
+                controller: bioController,
+              ),
               sizeVer(15),
             ],
           ),
