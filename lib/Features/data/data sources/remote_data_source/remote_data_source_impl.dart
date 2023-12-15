@@ -245,15 +245,37 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
   }
 
   @override
-  Future<void> deletePost(PostEntity post) {
-    // TODO: implement deletePost
-    throw UnimplementedError();
+  Future<void> deletePost(PostEntity post) async {
+    final postCollection = firebaseFirestore.collection(FirebaseConst.posts);
+    try {
+      postCollection.doc(post.postId).delete();
+    } catch (e) {
+      print('some erroe occured $e');
+    }
   }
 
   @override
-  Future<void> likePost(PostEntity post) {
-    // TODO: implement likePost
-    throw UnimplementedError();
+  Future<void> likePost(PostEntity post) async {
+    final postCollection = firebaseFirestore.collection(FirebaseConst.posts);
+
+    final currentUid = await getCurrentUserId();
+    final postRef = await postCollection.doc(post.postId).get();
+
+    if(postRef.exists){
+      List likes = postRef.get('likes');
+      final totalLikes = postRef.get('totalLikes');
+      if(likes.contains(currentUid)){
+        postCollection.doc(post.postId).update({
+          'likes': FieldValue.arrayRemove([currentUid]),
+          'totalLikes' : totalLikes - 1 ,
+        });
+      } else {
+        postCollection.doc(post.postId).update({
+        'likes': FieldValue.arrayUnion([currentUid]),
+          'totalLikes' : totalLikes + 1 ,
+        });
+      }
+    }
   }
 
   @override
