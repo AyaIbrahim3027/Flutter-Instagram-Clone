@@ -261,18 +261,18 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
     final currentUid = await getCurrentUserId();
     final postRef = await postCollection.doc(post.postId).get();
 
-    if(postRef.exists){
+    if (postRef.exists) {
       List likes = postRef.get('likes');
       final totalLikes = postRef.get('totalLikes');
-      if(likes.contains(currentUid)){
+      if (likes.contains(currentUid)) {
         postCollection.doc(post.postId).update({
           'likes': FieldValue.arrayRemove([currentUid]),
-          'totalLikes' : totalLikes - 1 ,
+          'totalLikes': totalLikes - 1,
         });
       } else {
         postCollection.doc(post.postId).update({
-        'likes': FieldValue.arrayUnion([currentUid]),
-          'totalLikes' : totalLikes + 1 ,
+          'likes': FieldValue.arrayUnion([currentUid]),
+          'totalLikes': totalLikes + 1,
         });
       }
     }
@@ -280,13 +280,25 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
 
   @override
   Stream<List<PostEntity>> readPosts(PostEntity post) {
-    // TODO: implement readPosts
-    throw UnimplementedError();
+    final postCollection = firebaseFirestore
+        .collection(FirebaseConst.posts)
+        .orderBy('createAt', descending: true);
+    return postCollection.snapshots().map((querySnapshot) =>
+        querySnapshot.docs.map((e) => PostModel.fromSnapshot(e)).toList());
   }
 
   @override
-  Future<void> updatePost(PostEntity post) {
-    // TODO: implement updatePost
-    throw UnimplementedError();
+  Future<void> updatePost(PostEntity post) async {
+    final postCollection = firebaseFirestore.collection(FirebaseConst.posts);
+    Map<String, dynamic> postInfo = Map();
+
+    if (post.description != "" && post.description != null) {
+      postInfo['description'] = post.description;
+    }
+    if (post.postImageUrl != "" && post.postImageUrl != null) {
+      postInfo['postImageUrl'] = post.postImageUrl;
+    }
+
+    postCollection.doc(post.postId).update(postInfo);
   }
 }
