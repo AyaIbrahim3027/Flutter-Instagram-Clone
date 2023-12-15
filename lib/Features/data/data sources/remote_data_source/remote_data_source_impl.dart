@@ -135,7 +135,13 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
               email: user.email!, password: user.password!)
           .then((value) async {
         if (value.user?.uid != null) {
-          await createUser(user);
+          if(user.imageFile != null){
+            uploadImageToStorage(user.imageFile , false, 'profileImages').then((profileUrl) {
+              createUserWithImage(user, profileUrl);
+            });
+          } else {
+            createUserWithImage(user, '');
+          }
         }
       });
       return;
