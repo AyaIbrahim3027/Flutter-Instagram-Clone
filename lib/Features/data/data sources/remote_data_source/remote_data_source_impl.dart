@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:instagram_clone/Features/data/data%20sources/remote_data_source/remote_data_source.dart';
+import 'package:instagram_clone/Features/data/models/post/post_model.dart';
+import 'package:instagram_clone/Features/domain/entities/posts/post_entity.dart';
 import 'package:instagram_clone/Features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/consts.dart';
 import 'package:uuid/uuid.dart';
@@ -21,24 +23,23 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
     required this.firebaseStorage,
   });
 
-
-  Future<void> createUserWithImage(UserEntity user,String profileUrl) async {
+  Future<void> createUserWithImage(UserEntity user, String profileUrl) async {
     final userCollection = firebaseFirestore.collection(FirebaseConst.users);
     final userId = await getCurrentUserId();
     userCollection.doc(userId).get().then((userDoc) {
       final newUser = UserModel(
-          userId: userId,
-          name: user.name,
-          email: user.email,
-          bio: user.bio,
-          following: user.following,
-          website: user.website,
-          profileUrl: profileUrl,
-          userName: user.userName,
-          totalFollowers: user.totalFollowers,
-          followers: user.followers,
-          totalFollowing: user.totalFollowing,
-          totalPosts: user.totalPosts)
+              userId: userId,
+              name: user.name,
+              email: user.email,
+              bio: user.bio,
+              following: user.following,
+              website: user.website,
+              profileUrl: profileUrl,
+              userName: user.userName,
+              totalFollowers: user.totalFollowers,
+              followers: user.followers,
+              totalFollowing: user.totalFollowing,
+              totalPosts: user.totalPosts)
           .toJson();
 
       if (!userDoc.exists) {
@@ -135,8 +136,9 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
               email: user.email!, password: user.password!)
           .then((value) async {
         if (value.user?.uid != null) {
-          if(user.imageFile != null){
-            uploadImageToStorage(user.imageFile , false, 'profileImages').then((profileUrl) {
+          if (user.imageFile != null) {
+            uploadImageToStorage(user.imageFile, false, 'profileImages')
+                .then((profileUrl) {
               createUserWithImage(user, profileUrl);
             });
           } else {
@@ -159,28 +161,35 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
     final userCollection = firebaseFirestore.collection(FirebaseConst.users);
     Map<String, dynamic> userInformation = Map();
 
-    if (user.userName != '' && user.userName != null)
+    if (user.userName != '' && user.userName != null) {
       userInformation['userName'] = user.userName;
+    }
 
-    if (user.website != "" && user.website != null)
+    if (user.website != "" && user.website != null) {
       userInformation['website'] = user.website;
+    }
 
-    if (user.profileUrl != "" && user.profileUrl != null)
+    if (user.profileUrl != "" && user.profileUrl != null) {
       userInformation['profileUrl'] = user.profileUrl;
+    }
 
     if (user.bio != "" && user.bio != null) userInformation['bio'] = user.bio;
 
-    if (user.name != "" && user.name != null)
+    if (user.name != "" && user.name != null) {
       userInformation['name'] = user.name;
+    }
 
-    if (user.totalFollowing != null)
+    if (user.totalFollowing != null) {
       userInformation['totalFollowing'] = user.totalFollowing;
+    }
 
-    if (user.totalFollowers != null)
+    if (user.totalFollowers != null) {
       userInformation['totalFollowers'] = user.totalFollowers;
+    }
 
-    if (user.totalPosts != null)
+    if (user.totalPosts != null) {
       userInformation['totalPosts'] = user.totalPosts;
+    }
 
     userCollection.doc(user.userId).update(userInformation);
   }
@@ -203,5 +212,59 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
         (await uploadTask.whenComplete(() {})).ref.getDownloadURL();
 
     return await imageUrl;
+  }
+
+  // post
+  @override
+  Future<void> createPost(PostEntity post) async {
+    final postCollection = firebaseFirestore.collection(FirebaseConst.posts);
+
+    final newPost = PostModel(
+      userProfileUrl: post.userProfileUrl,
+      username: post.username,
+      totalLikes: 0,
+      totalComments: 0,
+      postImageUrl: post.postImageUrl,
+      postId: post.postId,
+      likes: [],
+      description: post.description,
+      creatorUid: post.creatorUid,
+      createAt: post.createAt,
+    ).toJson();
+
+    try {
+      final postDocRef = await postCollection.doc(post.postId).get();
+      if (!postDocRef.exists) {
+        postCollection.doc(post.postId).set(newPost);
+      } else {
+        postCollection.doc(post.postId).update(newPost);
+      }
+    } catch (e) {
+      print('some erroe occured $e');
+    }
+  }
+
+  @override
+  Future<void> deletePost(PostEntity post) {
+    // TODO: implement deletePost
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> likePost(PostEntity post) {
+    // TODO: implement likePost
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<PostEntity>> readPosts(PostEntity post) {
+    // TODO: implement readPosts
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updatePost(PostEntity post) {
+    // TODO: implement updatePost
+    throw UnimplementedError();
   }
 }
