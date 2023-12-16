@@ -45,7 +45,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: BlocProvider<PostCubit>(
-        create: (context) => di.sl<PostCubit>()..getPosts(post: PostEntity()),
+        create: (context) =>
+        di.sl<PostCubit>()
+          ..getPosts(post: PostEntity()),
         child: BlocBuilder<PostCubit, PostState>(
           builder: (context, state) {
             if (state is PostLoading) {
@@ -56,11 +58,14 @@ class _HomePageState extends State<HomePage> {
             }
             if (state is PostLoaded) {
               return ListView.builder(
-                itemCount: state.posts.length,
+                  itemCount: state.posts.length,
                   itemBuilder: (context, index) {
-                final post = state.posts[index];
-                return SinglePostCardWidget(post: post);
-              });
+                    final post = state.posts[index];
+                    return BlocProvider<PostCubit>(
+                      create: (context) => di.sl<PostCubit>(),
+                      child: SinglePostCardWidget(post: post),
+                    );
+                  });
             }
             return const Center(child: CircularProgressIndicator(),);
           },
