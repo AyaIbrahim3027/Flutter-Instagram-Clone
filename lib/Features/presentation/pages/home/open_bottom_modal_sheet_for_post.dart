@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/Features/presentation/pages/post/update_post_page.dart';
+import 'package:instagram_clone/Features/domain/entities/posts/post_entity.dart';
 
 import '../../../../consts.dart';
 
-openBottomModalSheetForPost(BuildContext context) {
+openBottomModalSheetForPost(BuildContext context, PostEntity post) {
   return showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -35,11 +35,12 @@ openBottomModalSheetForPost(BuildContext context) {
                     color: secondaryColor,
                   ),
                   sizeVer(8),
-                   Padding(
+                  Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: GestureDetector(
-                      onTap: (){
-                        Navigator.pushNamed(context, PageConst.updatePostPage);
+                      onTap: () {
+                        Navigator.pushNamed(context, PageConst.updatePostPage,
+                            arguments: post);
                         // Navigator.push(context, MaterialPageRoute(builder: (context)=> const UpdatePostPage() , ),);
                       },
                       child: const Text(
