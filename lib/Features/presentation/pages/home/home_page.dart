@@ -45,30 +45,47 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: BlocProvider<PostCubit>(
-        create: (context) =>
-        di.sl<PostCubit>()
-          ..getPosts(post: PostEntity()),
+        create: (context) => di.sl<PostCubit>()..getPosts(post: PostEntity()),
         child: BlocBuilder<PostCubit, PostState>(
           builder: (context, state) {
             if (state is PostLoading) {
-              return const Center(child: CircularProgressIndicator(),);
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
             if (state is PostFailure) {
               toast('Some failure occured while creating the post');
             }
             if (state is PostLoaded) {
-              return ListView.builder(
-                  itemCount: state.posts.length,
-                  itemBuilder: (context, index) {
-                    final post = state.posts[index];
-                    return BlocProvider<PostCubit>(
-                      create: (context) => di.sl<PostCubit>(),
-                      child: SinglePostCardWidget(post: post),
-                    );
-                  });
+              return state.posts.isEmpty
+                  ? noPostsYetWidget()
+                  : ListView.builder(
+                      itemCount: state.posts.length,
+                      itemBuilder: (context, index) {
+                        final post = state.posts[index];
+                        return BlocProvider<PostCubit>(
+                          create: (context) => di.sl<PostCubit>(),
+                          child: SinglePostCardWidget(post: post),
+                        );
+                      });
             }
-            return const Center(child: CircularProgressIndicator(),);
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           },
+        ),
+      ),
+    );
+  }
+
+  noPostsYetWidget() {
+    return const Center(
+      child: Text(
+        'No Posts Yet',
+        style: TextStyle(
+          color: primaryColor,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
         ),
       ),
     );
