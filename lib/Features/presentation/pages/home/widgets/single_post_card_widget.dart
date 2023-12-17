@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:instagram_clone/Features/domain/entities/posts/post_entity.dart';
+import 'package:instagram_clone/Features/domain/use%20cases/firebase_usecases/user/get_current_userid_usecase.dart';
+import 'package:instagram_clone/Features/presentation/pages/post/widget/like_animation_widget.dart';
 import 'package:instagram_clone/profile_widget.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../consts.dart';
 import '../../../cubit/post/post_cubit.dart';
+
+import 'package:instagram_clone/injection_container.dart' as di;
 
 class SinglePostCardWidget extends StatefulWidget {
   const SinglePostCardWidget({super.key, required this.post});
@@ -17,6 +21,18 @@ class SinglePostCardWidget extends StatefulWidget {
 }
 
 class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
+  bool isLikeAnimating = false;
+  String currentUid = '';
+  @override
+  void initState() {
+    di.sl<GetCurrentUserIdUseCase>().call().then((value) {
+      setState(() {
+        currentUid = value;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -64,11 +80,42 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
             ],
           ),
           sizeVer(10),
-          Container(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.30,
-            // color: secondaryColor,
-            child: profileWidget(imageUrl: '${widget.post.postImageUrl}'),
+          GestureDetector(
+            onDoubleTap: () {
+              likePost();
+              setState(() {
+                isLikeAnimating = true;
+              });
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.30,
+                  // color: secondaryColor,
+                  child: profileWidget(imageUrl: '${widget.post.postImageUrl}'),
+                ),
+                AnimatedOpacity(
+                  duration: Duration(milliseconds: 200),
+                  opacity: isLikeAnimating ? 1 : 0,
+                  child: LikeAnimationWidget(
+                    duration: Duration(milliseconds: 300),
+                    isLikeAnimating: isLikeAnimating,
+                    onLikeFinish: () {
+                      setState(() {
+                        isLikeAnimating = false;
+                      });
+                    },
+                    child: const Icon(
+                      Icons.favorite,
+                      size: 100,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           sizeVer(10),
           Row(
@@ -76,9 +123,13 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
             children: [
               Row(
                 children: [
-                  const Icon(
-                    Icons.favorite,
-                    color: primaryColor,
+                  Icon(
+                    widget.post.likes!.contains(currentUid)
+                        ? Icons.favorite
+                        : Icons.favorite_outline,
+                    color: widget.post.likes!.contains(currentUid)
+                        ? Colors.red
+                        : primaryColor,
                   ),
                   sizeHor(10),
                   GestureDetector(
@@ -238,4 +289,12 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
       postId: widget.post.postId,
     ));
   }
+
+  likePost() {
+    BlocProvider.of<PostCubit>(context).likePost(
+        post: PostEntity(
+      postId: widget.post.postId,
+    ));
+  }
+
 }
