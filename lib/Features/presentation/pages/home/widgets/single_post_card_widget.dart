@@ -123,13 +123,16 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
             children: [
               Row(
                 children: [
-                  Icon(
-                    widget.post.likes!.contains(currentUid)
-                        ? Icons.favorite
-                        : Icons.favorite_outline,
-                    color: widget.post.likes!.contains(currentUid)
-                        ? Colors.red
-                        : primaryColor,
+                  GestureDetector(
+                    onTap: likePost,
+                    child: Icon(
+                      widget.post.likes!.contains(currentUid)
+                          ? Icons.favorite
+                          : Icons.favorite_outline,
+                      color: widget.post.likes!.contains(currentUid)
+                          ? Colors.red
+                          : primaryColor,
+                    ),
                   ),
                   sizeHor(10),
                   GestureDetector(
