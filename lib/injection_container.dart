@@ -21,11 +21,17 @@ import 'package:instagram_clone/Features/domain/use%20cases/firebase_usecases/us
 import 'package:instagram_clone/Features/domain/use%20cases/firebase_usecases/user/sign_up_user_usecase.dart';
 import 'package:instagram_clone/Features/domain/use%20cases/firebase_usecases/user/update_user_usecase.dart';
 import 'package:instagram_clone/Features/presentation/cubit/auth/auth_cubit.dart';
+import 'package:instagram_clone/Features/presentation/cubit/comment/comment_cubit.dart';
 import 'package:instagram_clone/Features/presentation/cubit/credential/credential_cubit.dart';
 import 'package:instagram_clone/Features/presentation/cubit/post/post_cubit.dart';
 import 'package:instagram_clone/Features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:instagram_clone/Features/presentation/cubit/user/user_cubit.dart';
 
+import 'Features/domain/use cases/firebase_usecases/comment/create_comment_usecase.dart';
+import 'Features/domain/use cases/firebase_usecases/comment/delete_comment_usecase.dart';
+import 'Features/domain/use cases/firebase_usecases/comment/like_comment_usecase.dart';
+import 'Features/domain/use cases/firebase_usecases/comment/read_comment_usecase.dart';
+import 'Features/domain/use cases/firebase_usecases/comment/update_comment_usecase.dart';
 import 'Features/domain/use cases/firebase_usecases/user/create_user_usecase.dart';
 
 final sl = GetIt.instance; // sl == service locator
@@ -61,6 +67,15 @@ Future<void> init() async {
         updatePostUseCase: sl.call(),
       ));
 
+  // Comment cubit
+  sl.registerFactory(() => CommentCubit(
+        createCommentUseCase: sl.call(),
+        deleteCommentUseCase: sl.call(),
+        likeCommentUseCase: sl.call(),
+        readCommentsUseCase: sl.call(),
+        updateCommentUseCase: sl.call(),
+      ));
+
   // Use cases
   // User
   sl.registerLazySingleton(() => SignOutUseCase(repository: sl.call()));
@@ -84,6 +99,13 @@ Future<void> init() async {
   sl.registerLazySingleton(() => LikePostUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => UpdatePostUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => DeletePostUseCase(repository: sl.call()));
+
+  // Comment
+  sl.registerLazySingleton(() => CreateCommentUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => ReadCommentsUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => LikeCommentUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => UpdateCommentUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => DeleteCommentUseCase(repository: sl.call()));
 
   // Repository
   sl.registerLazySingleton<FirebaseRepo>(() => FirebaseRepoImpl(
