@@ -12,7 +12,7 @@ class CommentEntity extends Equatable {
   final List<String>? likes;
   final num? totalReplays;
 
-  CommentEntity({
+  const CommentEntity({
     this.commentId,
     this.postId,
     this.creatorUid,
@@ -25,18 +25,15 @@ class CommentEntity extends Equatable {
   });
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
-        commentId,
-        postId,
-        creatorUid,
-        description,
-        username,
-        userProfileUrl,
-        createAt,
-        likes,
-        totalReplays,
-      ];
-
-
+    commentId,
+    postId,
+    creatorUid,
+    description,
+    username,
+    userProfileUrl,
+    createAt,
+    likes,
+    totalReplays,
+  ];
 }

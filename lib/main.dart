@@ -1,13 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_clone/Features/presentation/cubit/auth/auth_cubit.dart';
-import 'package:instagram_clone/Features/presentation/cubit/credential/credential_cubit.dart';
-import 'package:instagram_clone/Features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
-import 'package:instagram_clone/Features/presentation/cubit/user/user_cubit.dart';
-import 'package:instagram_clone/Features/presentation/pages/credential/sign_in_page.dart';
-import 'package:instagram_clone/Features/presentation/pages/main_screen/main_screen.dart';
-import 'package:instagram_clone/consts.dart';
+import 'package:instagram_clone/features/presentation/cubit/auth/auth_cubit.dart';
+import 'package:instagram_clone/features/presentation/cubit/credentail/credential_cubit.dart';
+import 'package:instagram_clone/features/presentation/page/credential/sign_in_page.dart';
+import 'package:instagram_clone/features/presentation/page/main_screen/main_screen.dart';
+import 'consts.dart';
+import 'features/presentation/cubit/user/get_single_other_user/get_single_other_user_cubit.dart';
+import 'features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
+import 'features/presentation/cubit/user/user_cubit.dart';
 import 'firebase_options.dart';
 import 'on_generate_route.dart';
 import 'injection_container.dart' as di;
@@ -32,6 +33,7 @@ class InstagramApp extends StatelessWidget {
         BlocProvider(create: (create) => di.sl<CredentialCubit>()),
         BlocProvider(create: (create) => di.sl<UserCubit>()),
         BlocProvider(create: (create) => di.sl<GetSingleUserCubit>()),
+        BlocProvider(create: (_) => di.sl<GetSingleOtherUserCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -43,11 +45,9 @@ class InstagramApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  if (state is Authenticated) {
-                    return MainScreen(
-                      userId: state.userId,
-                    );
+                builder: (context, authState) {
+                  if (authState is Authenticated) {
+                    return MainScreen(uid: authState.uid,);
                   } else {
                     return const SignInPage();
                   }

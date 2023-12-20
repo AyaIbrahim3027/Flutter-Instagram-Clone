@@ -27,16 +27,17 @@ class PostEntity extends Equatable {
   });
 
   @override
+  // TODO: implement props
   List<Object?> get props => [
-        postId,
-        creatorUid,
-        username,
-        description,
-        postImageUrl,
-        likes,
-        totalLikes,
-        totalComments,
-        createAt,
-        userProfileUrl,
-      ];
+    postId,
+    creatorUid,
+    username,
+    description,
+    postImageUrl,
+    likes,
+    totalLikes,
+    totalComments,
+    createAt,
+    userProfileUrl,
+  ];
 }

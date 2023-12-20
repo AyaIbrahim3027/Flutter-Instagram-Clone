@@ -1,16 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../../../domain/entities/comment/comment_entity.dart';
+import 'package:instagram_clone/features/domain/entities/comment/comment_entity.dart';
 
 class CommentModel extends CommentEntity {
+  @override
   final String? commentId;
+  @override
   final String? postId;
+  @override
   final String? creatorUid;
+  @override
   final String? description;
+  @override
   final String? username;
+  @override
   final String? userProfileUrl;
+  @override
   final Timestamp? createAt;
+  @override
   final List<String>? likes;
+  @override
   final num? totalReplays;
 
   CommentModel({

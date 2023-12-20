@@ -1,23 +1,35 @@
-import 'package:instagram_clone/Features/domain/entities/user/user_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 
 class UserModel extends UserEntity {
-  final String? userId;
-  final String? userName;
+  @override
+  final String? uid;
+  @override
+  final String? username;
+  @override
   final String? name;
+  @override
   final String? bio;
+  @override
   final String? website;
+  @override
   final String? email;
+  @override
   final String? profileUrl;
+  @override
   final List? followers;
+  @override
   final List? following;
+  @override
   final num? totalFollowers;
+  @override
   final num? totalFollowing;
+  @override
   final num? totalPosts;
 
-  const UserModel({
-    this.userId,
-    this.userName,
+  UserModel({
+    this.uid,
+    this.username,
     this.name,
     this.bio,
     this.website,
@@ -28,46 +40,45 @@ class UserModel extends UserEntity {
     this.totalFollowers,
     this.totalFollowing,
     this.totalPosts,
-
   }) : super(
-    userId: userId,
-    following: following,
+    uid: uid,
     totalFollowing: totalFollowing,
-    followers:followers,
+    followers: followers,
     totalFollowers: totalFollowers,
-    userName: userName,
+    username: username,
     profileUrl: profileUrl,
     website: website,
-    name: name,
+    following: following,
     bio: bio,
+    name: name,
     email: email,
     totalPosts: totalPosts,
   );
 
-  factory UserModel.fromSnapshot(DocumentSnapshot snap){
-    var snapshot = snap.data() as Map<String,dynamic>;
+  factory UserModel.fromSnapshot(DocumentSnapshot snap) {
+    var snapshot = snap.data() as Map<String, dynamic>;
 
     return UserModel(
       email: snapshot['email'],
       name: snapshot['name'],
       bio: snapshot['bio'],
-      userName: snapshot['userName'],
+      username: snapshot['username'],
       totalFollowers: snapshot['totalFollowers'],
       totalFollowing: snapshot['totalFollowing'],
-      userId: snapshot['userId'],
+      totalPosts: snapshot['totalPosts'],
+      uid: snapshot['uid'],
       website: snapshot['website'],
       profileUrl: snapshot['profileUrl'],
-      totalPosts: snapshot['totalPosts'],
-      followers: List.from(snap.get('followers')),
-      following: List.from(snap.get('following')),
+      followers: List.from(snap.get("followers")),
+      following: List.from(snap.get("following")),
     );
   }
 
-  Map<String,dynamic> toJson() => {
-    "userId": userId,
+  Map<String, dynamic> toJson() => {
+    "uid": uid,
     "email": email,
     "name": name,
-    "userName": userName,
+    "username": username,
     "totalFollowers": totalFollowers,
     "totalFollowing": totalFollowing,
     "totalPosts": totalPosts,

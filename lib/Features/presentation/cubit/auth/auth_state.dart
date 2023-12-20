@@ -10,11 +10,11 @@ class AuthInitial extends AuthState {
 }
 
 class Authenticated extends AuthState {
-  final String userId;
+  final String uid;
 
-  const Authenticated({required this.userId});
+  Authenticated({required this.uid});
   @override
-  List<Object> get props => [userId];
+  List<Object> get props => [uid];
 }
 
 class UnAuthenticated extends AuthState {

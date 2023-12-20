@@ -8,7 +8,6 @@ class CommentInitial extends CommentState {
   @override
   List<Object> get props => [];
 }
-
 class CommentLoading extends CommentState {
   @override
   List<Object> get props => [];
@@ -26,3 +25,4 @@ class CommentFailure extends CommentState {
   @override
   List<Object> get props => [];
 }
+
