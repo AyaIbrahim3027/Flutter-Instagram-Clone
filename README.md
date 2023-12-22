@@ -1,6 +1,6 @@
 # instagram_clone
 
-Instagram Clone Flutter with Clean Architecture Firebase
+Flutter Instagram Clone with Clean Architecture Firebase
 
 ## App Features
 
